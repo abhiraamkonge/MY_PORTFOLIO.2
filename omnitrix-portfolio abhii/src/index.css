@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Exo 2", system-ui, -apple-system, sans-serif;
+  --font-display: "Orbitron", "Exo 2", monospace;
+  
+  --color-omni-bright: #00ff41;
+  --color-omni-dim: #008f1f;
+  --color-omni-dark: #002200;
+  --color-omni-extradark: #011101;
+  --color-omni-black: #050505;
+  --color-omni-gray: #1a1a1a;
+  --color-omni-silver: #888888;
+}
+
+@layer utilities {
+  .glow-green-sm {
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+  }
+  .glow-green-md {
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.7);
+  }
+  .glow-green-lg {
+    box-shadow: 0 0 35px rgba(0, 255, 65, 0.9);
+  }
+  .text-glow-green {
+    text-shadow: 0 0 8px rgba(0, 255, 65, 0.8), 0 0 15px rgba(0, 255, 65, 0.4);
+  }
+  .text-glow-green-strong {
+    text-shadow: 0 0 12px rgba(0, 255, 65, 1), 0 0 25px rgba(0, 255, 65, 0.7);
+  }
+  .clip-hex {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+  
+  /* High Density & Sci-Fi Dashboard styling */
+  .hex-clip {
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+  
+  .hud-corner {
+    position: relative;
+  }
+  
+  .hud-corner::before,
+  .hud-corner::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: #00ff41;
+    border-style: solid;
+    pointer-events: none;
+    opacity: 0.75;
+    transition: all 0.3s ease;
+  }
+  
+  .hud-corner::before {
+    top: 0; left: 0;
+    border-width: 2px 0 0 2px;
+  }
+  
+  .hud-corner::after {
+    bottom: 0; right: 0;
+    border-width: 0 2px 2px 0;
+  }
+  
+  .hud-corner:hover::before,
+  .hud-corner:hover::after {
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+    border-color: #ffffff;
+  }
+
+  .cyber-grid {
+    background-image: linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-size: 15px 15px;
+  }
+}
+
+/* Custom glow borders and cyber grid styling */
+.omni-card {
+  background: rgba(5, 5, 5, 0.85);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.1) inset, 0 4px 20px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.omni-card:hover {
+  border-color: rgba(0, 255, 65, 0.9);
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.25) inset, 0 0 15px rgba(0, 255, 65, 0.2);
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #011101;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff41;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #26ff5e;
+}
+
+/* Scanlines and screen flicker overlays */
+.scanlines {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.scanline-sweep {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 255, 65, 0.5), transparent);
+  position: absolute;
+  top: -10px;
+  left: 0;
+  animation: sweep 6s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Hologram vignette gradient overlay for sci-fi look */
+.hologram-vignette {
+  position: fixed;
+  top: -10%; left: -10%; width: 120%; height: 120%;
+  background: radial-gradient(circle, transparent 40%, rgba(5, 5, 5, 0.8) 80%);
+  pointer-events: none;
+  z-index: 20;
+}
+
+@keyframes sweep {
+  0% { top: -2%; }
+  100% { top: 102%; }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+
+.animate-glitch-hover:hover {
+  animation: glitch 0.2s infinite;
+}
+
+.flicker-text {
+  animation: flicker 4s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 35%, 44%, 90%, 95%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.8), 0 0 20px rgba(0, 255, 65, 0.4);
+  }
+  19%, 21%, 23%, 24%, 36%, 43%, 91%, 94% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+}
+
+/* Rotation animations for Omnitrix gears & displays */
+@keyframes spin-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-counter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes pulse-intense {
+  0%, 100% { transform: scale(1); opacity: 0.85; filter: drop-shadow(0 0 8px rgba(0,255,65,0.4)); }
+  50% { transform: scale(1.025); opacity: 1; filter: drop-shadow(0 0 22px rgba(0,255,65,0.95)); }
+}
+
+.animate-spin-slow {
+  animation: spin-clockwise 25s linear infinite;
+}
+
+.animate-spin-counter {
+  animation: spin-counter 18s linear infinite;
+}
+
+.animate-spin-fast {
+  animation: spin-clockwise 3s linear infinite;
+}
+
+.animate-pulse-intense {
+  animation: pulse-intense 3.5s ease-in-out infinite;
+}
+
+/* Grid overlay background */
+.circuit-overlay {
+  background-image: 
+    radial-gradient(rgba(0, 61, 0, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(0, 255, 65, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.015) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 40px 40px;
+}
+
+/* Scroll progress indicator line */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #00ff41;
+  box-shadow: 0 0 10px #00ff41, 0 0 2px #ffffff;
+  z-index: 10001;
+  transition: width 0.1s ease-out;
+}

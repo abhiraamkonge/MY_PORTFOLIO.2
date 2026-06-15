@@ -1,0 +1,6 @@
+{
+  "name": "Omnitrix Portfolio",
+  "description": "A Ben 10 Omnitrix themed sci-fi developer portfolio for Abhiram Konge, showing technical projects, skills dial, and terminal transmission logs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
